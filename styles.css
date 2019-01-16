@@ -1,0 +1,134 @@
+html,
+body {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  color: white;
+  margin-top: 10px;
+}
+
+a {
+    color: white;
+}
+a:hover {
+    opacity: 0.5;
+}
+
+#constructions {
+    height: 300px;
+    width: 100%;
+    display: grid;
+    grid-gap: 0px;
+    grid-template-columns:3fr 2fr;
+    grid-template-areas:
+    "c-left c-right";
+}
+
+#constructions-left {
+    grid-area: c-left;
+
+    position: relative;
+    text-align: left;
+    padding-top: 45vh;
+    padding-left: 10px; 
+    background: #1E1E1E;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+}
+
+#constructions-left h1 {
+    color: white;
+}
+
+#constructions-left p {
+    color: white;
+}
+
+#img-logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    width: 150px;
+    height: auto;
+}
+
+#constructions-right {
+    grid-area: c-right;
+
+    text-align: left;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+
+    overflow: hidden;
+}
+
+#img-content {
+    height: 100%;
+    width: auto;
+
+    margin-left: -400px;
+}
+
+#welcome-section-2 {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    p {
+        font-size: 14px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+
+    #welcome-section {
+        display: none;
+    }
+
+    #welcome-section-2 {
+        display: block;
+        top: 0;
+        min-height: 55vh;
+        padding-top: 45vh;
+
+    }
+
+    #welcome-section-2 h1 {
+        color: white;
+    }
+
+    #img-content-2 {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        margin-left: -400px;
+        
+        width: auto; 
+        height: 100%;
+        z-index: -2;
+        overflow: hidden;
+    }
+
+    #welcome-content {
+        position: absolute;
+        background: black;
+        opacity: 0.7;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+  }
