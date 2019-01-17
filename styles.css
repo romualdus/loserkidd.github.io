@@ -38,7 +38,7 @@ body {
 
     padding-top: 40vh;
     padding-bottom: 0;
-    background-color:rgba(0, 0, 0, 0.5);;
+    background-color:rgba(0, 0, 0, 0.5);
     width: 100%;
     height: auto;
 
@@ -66,7 +66,7 @@ body {
     /* For desktop: */
 
     .content {
-        background-position: top 0px right -50vh;
+        background-position: top 0px right -55vh;
     }
 
     .constructions {
@@ -75,8 +75,12 @@ body {
     }
 
     .constructions-left {
-        background-color:rgba(0, 0, 0, 1);
+        background-color:rgba(255, 255, 255, 1);
         
         overflow: hidden;
+    }
+
+    .constructions-left h1, p, a {
+        color: black;
     }
 }
