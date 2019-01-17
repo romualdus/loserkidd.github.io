@@ -2,6 +2,7 @@ html,
 body {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
+  height: 100%;
 }
 
 * {
@@ -9,44 +10,47 @@ body {
   padding: 0;
 }
 
-a {
-    color: black;
+.content {
+    /* The image used */
+    background-image: url("https://www.concave.com/id/media/wysiwyg/typostores/typologancee/home-assets/large/hulk-banner.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-a:hover {
-    opacity: 0.5;
-}
-
-#constructions {
-    height: 300px;
+.constructions {
+    height: 100%;
     width: 100%;
     display: grid;
     grid-gap: 0px;
     grid-template-columns:3fr 2fr;
     grid-template-areas:
-    "c-left c-right";
+    "c-left c-left";
 }
 
-#constructions-left {
+.constructions-left {
     grid-area: c-left;
 
-    position: relative;
-    text-align: left;
-    padding-top: 45vh;
-    padding-left: 10px; 
-    background: white;
+    padding-top: 40vh;
+    padding-bottom: 0;
+    background-color:rgba(0, 0, 0, 0.5);;
     width: 100%;
     height: auto;
-    z-index: 2;
+
+    overflow: hidden;
 }
 
-#constructions-left h1 {
-    color: black;
+.constructions-left h1, p, a {
+    color: white;
 }
 
-#constructions-left p {
+.constructions-left p, a {
     margin-top: 10px;
-    color: black;
 }
 
 #img-logo {
@@ -54,82 +58,24 @@ a:hover {
     left: 0;
     top: 0;
     
-    width: 150px;
+    width: 9.375em;
     height: auto;
 }
 
-#constructions-right {
-    grid-area: c-right;
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
 
-    text-align: left;
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    z-index: 1;
-
-    overflow: hidden;
-}
-
-#img-content {
-    height: 100%;
-    width: auto;
-
-    margin-left: -400px;
-}
-
-#welcome-section-2 {
-    display: none;
-}
-
-@media all and (max-width: 600px) {
-    a {
-        color: white;
+    .content {
+        background-position: top 0px right -50vh;
     }
 
-
-    #welcome-section {
-        display: none;
+    .constructions {
+        grid-template-areas:
+        "c-left .";
     }
 
-    #welcome-section-2 {
-        display: block;
-        top: 0;
-        min-height: 55vh;
-        padding-top: 45vh;
+    .constructions-left {
+        background-color:rgba(0, 0, 0, 1);
         
         overflow: hidden;
     }
-
-    #welcome-section-2 h1 {
-        font-size: 24px;
-        color: white;
-    }
-
-    #welcome-section-2 p {
-        font-size: 14px;
-        color: white;
-    }
-
-    #img-content-2 {
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        margin-left: -400px;
-        
-        width: auto; 
-        height: 100%;
-        z-index: -2;
-    }
-
-    #welcome-content {
-        position: absolute;
-        background: black;
-        opacity: 0.7;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-    }
-  }
