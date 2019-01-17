@@ -49,8 +49,13 @@ body {
     color: white;
 }
 
+.constructions-left h1 {
+    font-size: 2em;
+}
+
 .constructions-left p, a {
     margin-top: 10px;
+    font-size: 1em;
 }
 
 #img-logo {
