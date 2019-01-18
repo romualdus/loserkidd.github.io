@@ -36,7 +36,7 @@ body {
 .constructions-left {
     grid-area: c-left;
 
-    padding-top: 40vh;
+    padding-top: 30vh;
     padding-bottom: 0;
     background-color:rgba(0, 0, 0, 0.5);
     width: 100%;
@@ -59,11 +59,11 @@ body {
 }
 
 #img-logo {
-    position: absolute;
+    /* position: absolute;
     left: 0;
-    top: 0;
+    top: 0; */
     
-    width: 9.375em;
+    width: 15em;
     height: auto;
 }
 
