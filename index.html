@@ -3,6 +3,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8" />
+        <!-- <meta http-equiv = "refresh" content = "3; url = https://www.concave.com/id/" /> -->
         <link rel="stylesheet" href="styles.css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700,900,300italic,400italic,700italic,900italic&amp;subset=latin" rel="stylesheet" type="text/css">
     </head>
@@ -15,8 +16,30 @@
                     <h1>CONCAVE.CO.ID AKAN SEGERA HADIR</h1>
                     <p>Situs kami sedang dalam pembaharuan,<br>mohon maaf atas ketidaknyamanannya.<br>Terima kasih.</p>
                     <p>Jika Anda ada pertanyaan email: <a href="mailto:project1@aggio.com">project1@aggio.com</a></p>
+
+                    <p>Untuk sementara silahkan kunjungi <a href="https://www.concave.com/id/">concave.com/id</a></p>
+                    <p>Anda akan pindah ke concave.com/id dalam <span id="timer">10</span> detik</p>
                 </div>
             </div>
         </div>
+
+        <script language="javascript" type="text/javascript">
+            //get the element
+            var e = document.getElementById("timer");
+            //set the second
+            var time = 10;
+
+            //update countdown every 1000ms
+            var x = setInterval(function() {
+                if(time === 0)
+                {
+                    clearInterval(x);
+                    window.location.replace("https://www.concave.com/id/");
+                };
+
+                e.innerHTML = time;
+                time--;
+            },1000)
+        </script>
     </body>
 </html>
