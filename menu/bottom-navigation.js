@@ -268,6 +268,7 @@ function setButtonAddCustom() {
     buttonAdd.setAttribute('type', 'button');
   }
 }
+
 function setNavCustom() {
   const pathname = window.location.pathname;
   if(pathname.includes('/products/')) {
@@ -287,6 +288,7 @@ function toggleSideMenu() {
     }
     toggleButtonTo = 'menu-show';
     menuDisplay.removeAttribute('style');
+    cartDisplay.classList.add('quick-cart--list-show');
   } else {
     toggleButtonTo = 'menu-hide';
     menuDisplay.style.maxHeight = '6rem';
@@ -324,9 +326,11 @@ function toggleCartList() {
     }
     toggleButtonTo = 'cart-show';
     cartDisplay.removeAttribute('style');
+    cartDisplay.classList.add('quick-cart--show');
   } else {
     toggleButtonTo = 'cart-hide';
     cartDisplay.style.maxHeight = '6rem';
+    cartDisplay.classList.remove('quick-cart--show');
   }
   
   if(pathname.includes('/products/')) {
