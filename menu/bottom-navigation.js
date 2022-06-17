@@ -7,10 +7,8 @@ renderMenuList();
 
 // #region Checkout
 function addToCartCustom() {
-  const variantId = document.querySelector('form[action="/cart/add"] [name="id"]').value;
-  const qty = document.querySelector('input[name="quantity"]') 
-  ? document.querySelector('input[name="quantity"]').value
-  : 1;
+  const variantId = document.querySelector('form[action="/cart/add"] input[name="id"]').getAttribute('value');
+  const qty = document.querySelector('input[name="quantity"]').value;
   
   let formData = {
    'items': [{
@@ -52,9 +50,8 @@ function updateCartCustom(id, qty) {
 }
 
 function checkoutCustom() {
-	window.location.href = '/checkout';
-//   const element = document.querySelector('button.mu-checkout-btn');
-//   element.click();
+  const element = document.querySelector('button[name="checkout"]');
+  element.click();
 }
 // #endregion Checkout
 
@@ -148,19 +145,18 @@ function renderCartListTotal(totalPrice, isShow) {
 
 // #region Menu List
 function renderMenuList() {
-  const navElement = document.querySelector('ul.site-nav');
-  const menuElements = navElement.children;
+  const navElement = document.querySelector('nav ul');
+  const menuElements = navElement.childNodes;
   
   let menuList = '';
   
-  [...menuElements].forEach(selectedItem => {
+  menuElements.forEach(selectedItem => {
     const item = selectedItem.firstElementChild;
     const nextIconSrc = document.querySelector('#next-icon').getAttribute('value');
     
-    if(selectedItem.childElementCount > 1) {
-      const subItemTitle = item.text.replace(/\s+/g, ' ').trim();
+    if(item.tagName !== 'A') {
+      const subItemTitle = item.firstElementChild.innerText.replace(/\s+/g, ' ').trim();
       const subItemId = subItemTitle.replace(' ','');
-      
       menuList += 
         `<li onclick="renderSubMenuList('menu','${subItemId}')">
 			<span class="side-menu__item">${subItemTitle}</span>
@@ -176,14 +172,13 @@ function renderMenuList() {
 					<ul class="side-menu__list">
 		`
       
-      const subMenuElements = selectedItem.querySelector('ul').children;
-      [...subMenuElements].forEach(selectedSubItem => {
+      const subItemElements = item.querySelector('ul').childNodes;
+      subItemElements.forEach(selectedSubItem => {
         const subItem = selectedSubItem.firstElementChild;
         
-        if(selectedSubItem.childElementCount > 1) {
-          const subSubItemTitle = subItem.text.replace(/\s+/g, ' ').trim();
+        if(subItem.tagName !== 'A') {
+          const subSubItemTitle = subItem.firstElementChild.innerText.replace(/\s+/g, ' ').trim();
           const subSubItemId = subSubItemTitle.replace(' ','');
-          
           subNav += 
             `<li onclick="renderSubMenuList('${subItemId}','${subSubItemId}')">
                 <span class="side-menu__item">${subSubItemTitle}</span>
@@ -199,24 +194,23 @@ function renderMenuList() {
                         <ul class="side-menu__list">
             `
           
-          const subSubMenuElements = selectedSubItem.querySelector('ul').children;
-          [...subSubMenuElements].forEach(selectedSubSubItem => {
-            subSubNav += menuListItem(selectedSubSubItem);
+          const subSubItemElements = subItem.querySelector('ul').childNodes;
+          subSubItemElements.forEach(selectedSubSubItem => {
+            const subSubItem = selectedSubSubItem.firstElementChild;
+            subSubNav += menuListItem(subSubItem);
           })
-          
           subSubNav += `</ul></div></div>`;
           document.querySelector('.side-menu').innerHTML += subSubNav;
           
         } else {
-          subNav += menuListItem(selectedSubItem);
+          subNav += menuListItem(subItem);
         }
       })
-      
       subNav += `</ul></div></div>`;
       document.querySelector('.side-menu').innerHTML += subNav;
       
     } else {
-      menuList += menuListItem(selectedItem);
+      menuList += menuListItem(item);
     }
   })
   
@@ -252,13 +246,12 @@ function renderSubMenuList(prevNav, nextNav, goBack = false) {
 }
 
 function menuListItem(item) {
-  const selectedItem = item.firstElementChild;
-  const isActive = item.classList.contains('site-nav--active');
+  const isActive = item.getAttribute('class').includes('active');
   
   const itemList = 
     `<li>
-		<a href="${selectedItem.getAttribute('href')}" class="side-menu__item ${isActive ? 'side-menu__item--active' : ''}">
-			${selectedItem.innerHTML}
+		<a href="${item.getAttribute('href')}" class="side-menu__item ${isActive ? 'side-menu__item--active' : ''}">
+			${item.innerHTML}
 		</a>
 	</li>`
 
@@ -271,7 +264,8 @@ function menuListItem(item) {
 function setButtonAddCustom() {
   const buttonAdd = document.querySelector('button[name="add"]');
   if(buttonAdd !== null) {
-    buttonAdd.setAttribute('onclick', 'setTimeout("getCartList(false)", 3000);');
+    buttonAdd.setAttribute('onclick', 'addToCartCustom()');
+    buttonAdd.setAttribute('type', 'button');
   }
 }
 function setNavCustom() {
@@ -295,7 +289,7 @@ function toggleSideMenu() {
     menuDisplay.removeAttribute('style');
   } else {
     toggleButtonTo = 'menu-hide';
-    menuDisplay.style.maxHeight = 'calc(var(--bottom-nav-base-size) * 6)';
+    menuDisplay.style.maxHeight = '6rem';
     
     setTimeout(function(){
       document.querySelector('.side-menu__back').style.visibility = 'hidden';
@@ -332,7 +326,7 @@ function toggleCartList() {
     cartDisplay.removeAttribute('style');
   } else {
     toggleButtonTo = 'cart-hide';
-    cartDisplay.style.maxHeight = 'calc(var(--bottom-nav-base-size) * 6)';
+    cartDisplay.style.maxHeight = '6rem';
   }
   
   if(pathname.includes('/products/')) {
