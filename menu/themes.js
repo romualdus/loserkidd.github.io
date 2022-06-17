@@ -59,7 +59,7 @@ const menu = `
       <input id="delete-src-icon" type="hidden" value="${assetImageUrl}/close-round-icon.svg">
     </div>
     
-    <div class="side-menu bounce-in" style="max-height: calc(var(--cnc-base-size) * 6);">
+    <div class="side-menu bounce-in" style="max-height: calc(var(--cmc-base-size) * 6);">
       <input id="next-icon" type="hidden" value="${assetImageUrl}/next-icon.svg">
       <div class="side-menu__close" onclick="toggleSideMenu();">
         <img src="${assetImageUrl}/close-white-icon.svg">
