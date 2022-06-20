@@ -7,8 +7,10 @@ renderMenuList();
 
 // #region Checkout
 function addToCartCustom() {
-  const variantId = document.querySelector('form[action="/cart/add"] input[name="id"]').getAttribute('value');
-  const qty = document.querySelector('input[name="quantity"]').value;
+  const variantId = document.querySelector('form[action="/cart/add"] [name="id"]').value;
+  const qty = document.querySelector('input[name="quantity"]') 
+  ? document.querySelector('input[name="quantity"]').value
+  : 1;
   
   let formData = {
    'items': [{
@@ -50,8 +52,9 @@ function updateCartCustom(id, qty) {
 }
 
 function checkoutCustom() {
-  const element = document.querySelector('button[name="checkout"]');
-  element.click();
+	window.location.href = '/checkout';
+//   const element = document.querySelector('button.mu-checkout-btn');
+//   element.click();
 }
 // #endregion Checkout
 
@@ -145,18 +148,19 @@ function renderCartListTotal(totalPrice, isShow) {
 
 // #region Menu List
 function renderMenuList() {
-  const navElement = document.querySelector('nav ul');
-  const menuElements = navElement.childNodes;
+  const navElement = document.querySelector('ul.site-nav');
+  const menuElements = navElement.children;
   
   let menuList = '';
   
-  menuElements.forEach(selectedItem => {
+  [...menuElements].forEach(selectedItem => {
     const item = selectedItem.firstElementChild;
     const nextIconSrc = document.querySelector('#next-icon').getAttribute('value');
     
-    if(item.tagName !== 'A') {
-      const subItemTitle = item.firstElementChild.innerText.replace(/\s+/g, ' ').trim();
+    if(selectedItem.childElementCount > 1) {
+      const subItemTitle = item.text.replace(/\s+/g, ' ').trim();
       const subItemId = subItemTitle.replace(' ','');
+      
       menuList += 
         `<li onclick="renderSubMenuList('menu','${subItemId}')">
 			<span class="side-menu__item">${subItemTitle}</span>
@@ -172,13 +176,14 @@ function renderMenuList() {
 					<ul class="side-menu__list">
 		`
       
-      const subItemElements = item.querySelector('ul').childNodes;
-      subItemElements.forEach(selectedSubItem => {
+      const subMenuElements = selectedItem.querySelector('ul').children;
+      [...subMenuElements].forEach(selectedSubItem => {
         const subItem = selectedSubItem.firstElementChild;
         
-        if(subItem.tagName !== 'A') {
-          const subSubItemTitle = subItem.firstElementChild.innerText.replace(/\s+/g, ' ').trim();
+        if(selectedSubItem.childElementCount > 1) {
+          const subSubItemTitle = subItem.text.replace(/\s+/g, ' ').trim();
           const subSubItemId = subSubItemTitle.replace(' ','');
+          
           subNav += 
             `<li onclick="renderSubMenuList('${subItemId}','${subSubItemId}')">
                 <span class="side-menu__item">${subSubItemTitle}</span>
@@ -194,23 +199,24 @@ function renderMenuList() {
                         <ul class="side-menu__list">
             `
           
-          const subSubItemElements = subItem.querySelector('ul').childNodes;
-          subSubItemElements.forEach(selectedSubSubItem => {
-            const subSubItem = selectedSubSubItem.firstElementChild;
-            subSubNav += menuListItem(subSubItem);
+          const subSubMenuElements = selectedSubItem.querySelector('ul').children;
+          [...subSubMenuElements].forEach(selectedSubSubItem => {
+            subSubNav += menuListItem(selectedSubSubItem);
           })
+          
           subSubNav += `</ul></div></div>`;
           document.querySelector('.side-menu').innerHTML += subSubNav;
           
         } else {
-          subNav += menuListItem(subItem);
+          subNav += menuListItem(selectedSubItem);
         }
       })
+      
       subNav += `</ul></div></div>`;
       document.querySelector('.side-menu').innerHTML += subNav;
       
     } else {
-      menuList += menuListItem(item);
+      menuList += menuListItem(selectedItem);
     }
   })
   
@@ -246,12 +252,13 @@ function renderSubMenuList(prevNav, nextNav, goBack = false) {
 }
 
 function menuListItem(item) {
-  const isActive = item.getAttribute('class').includes('active');
+  const selectedItem = item.firstElementChild;
+  const isActive = item.classList.contains('site-nav--active');
   
   const itemList = 
     `<li>
-		<a href="${item.getAttribute('href')}" class="side-menu__item ${isActive ? 'side-menu__item--active' : ''}">
-			${item.innerHTML}
+		<a href="${selectedItem.getAttribute('href')}" class="side-menu__item ${isActive ? 'side-menu__item--active' : ''}">
+			${selectedItem.innerHTML}
 		</a>
 	</li>`
 
@@ -264,11 +271,9 @@ function menuListItem(item) {
 function setButtonAddCustom() {
   const buttonAdd = document.querySelector('button[name="add"]');
   if(buttonAdd !== null) {
-    buttonAdd.setAttribute('onclick', 'addToCartCustom()');
-    buttonAdd.setAttribute('type', 'button');
+    buttonAdd.setAttribute('onclick', 'setTimeout("getCartList(false)", 3000);');
   }
 }
-
 function setNavCustom() {
   const pathname = window.location.pathname;
   if(pathname.includes('/products/')) {
@@ -288,10 +293,9 @@ function toggleSideMenu() {
     }
     toggleButtonTo = 'menu-show';
     menuDisplay.removeAttribute('style');
-    cartDisplay.classList.add('quick-cart--list-show');
   } else {
     toggleButtonTo = 'menu-hide';
-    menuDisplay.style.maxHeight = '6rem';
+    menuDisplay.style.maxHeight = 'calc(var(--bottom-nav-base-size) * 6)';
     
     setTimeout(function(){
       document.querySelector('.side-menu__back').style.visibility = 'hidden';
@@ -326,11 +330,9 @@ function toggleCartList() {
     }
     toggleButtonTo = 'cart-show';
     cartDisplay.removeAttribute('style');
-    cartDisplay.classList.add('quick-cart--show');
   } else {
     toggleButtonTo = 'cart-hide';
-    cartDisplay.style.maxHeight = '6rem';
-    cartDisplay.classList.remove('quick-cart--show');
+    cartDisplay.style.maxHeight = 'calc(var(--bottom-nav-base-size) * 6)';
   }
   
   if(pathname.includes('/products/')) {
